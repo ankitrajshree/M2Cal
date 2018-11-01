@@ -31,6 +31,21 @@ def getAbstractTokens(text):
 def getDateTimeEntities():
     pass
 
+def get_time_fallback(text):
+    am_pm = re.findall(r'\bam|AM|pm|PM\b', text)[0]
+    print am_pm
+    time_index = re.search(r'\bam|AM|pm|PM\b', text).start()
+    print time_index
+    if text[time_index - 3] == ':':
+        offset = 5
+        print 'if block'
+    else:
+        print 'else block'
+        offset = 2
+    time = text[time_index - offset:time_index].strip()
+    final_time = time + ' ' + am_pm
+    return final_time
+
 
 with open('MessageBody.txt', 'r') as fp:
     text = ' '.join(fp)
